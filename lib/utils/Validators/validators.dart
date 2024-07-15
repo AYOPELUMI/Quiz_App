@@ -1,15 +1,11 @@
 import 'dart:core';
 
-class AppVVaukdators{
-
+class AppValidators{
+  AppValidators._();
   static String? validatorEmptyString( String? fieldName, String? value){
 
     if(value == null || value.isEmpty){
       return  '${fieldName} is required';
-    }
-    final emailRegExp = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if(!emailRegExp.hasMatch(value)){
-      return 'invalid email address';
     }
   return null;
   }
@@ -18,6 +14,11 @@ class AppVVaukdators{
    if(value == null || value.isEmpty){
       return  'email is required';
     }
+        final emailRegExp = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if(!emailRegExp.hasMatch(value)){
+      return 'invalid email address';
+    }
+    return null;
   }
 
   static String? validatePassword(String? value){
@@ -31,6 +32,7 @@ class AppVVaukdators{
     if (!(value.contains(passwordRegExp))) {
       return 'password must contains at least an uppercase, a number, a special symbol';
     }
+    return null;
   }
 
 }
