@@ -11,7 +11,7 @@ class WelcomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: appBarBg,
         title: Text(appName,
-        style: Theme.of(context).textTheme.headlineLarge!.apply(color: Colors.white))
+        style: Theme.of(context).textTheme.titleLarge!.apply(color: Colors.white))
       )
     );
   }

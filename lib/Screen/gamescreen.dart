@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Gamescreen extends StatelessWidget {
-  const Gamescreen({super.key});
+class GameScreen extends StatelessWidget {
+  const GameScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return const Scaffold(
+      body: Center(
+        child: Text("Welcome back ")
+      )
+    );
   }
 }

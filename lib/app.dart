@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quiz_app/Screen/welcomescreen.dart';
-
+import 'package:quiz_app/Screen/splashscreen.dart';
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -11,7 +10,7 @@ class MyApp extends StatelessWidget {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Quiz App',
-      home: const WelcomeScreen(),
+      home: SplashScreen(),
     );
   }
 }
