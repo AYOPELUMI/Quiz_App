@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_app/Controllers/questionController.dart';
-import 'package:quiz_app/utils/Validators/validators.dart';
 import 'package:quiz_app/widgets/appPrimaryButton.dart';
 
 import '../routes/routes.dart';
@@ -70,7 +69,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     )
                   ),
                   validator: (String? val){
-                    AppValidators.validateEmptyString(val);
+                    if(val!.isEmpty){
+                      return "this field is required";
+                    }
+                    return null;
                   },
                   onSaved: (newValue){
                     controller.name= newValue!.trim().toUpperCase();
