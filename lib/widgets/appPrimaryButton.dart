@@ -6,25 +6,31 @@ class AppPrimaryButton extends StatelessWidget {
       super.key,
       required this.buttonText, 
       required this.buttonColor, 
-      required this.textColor});
+      required this.textColor,
+      required this.onTap});
 
 
   final String buttonText;
   final Color buttonColor;
   final Color textColor;
+  final void Function()? onTap;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-              width: double.infinity,
-              height: AppSize.buttonHeight,
-              decoration: BoxDecoration(
-                color: buttonColor,
-                borderRadius: BorderRadius.circular(AppSize.borderRadiusXs),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+                width: double.infinity,
+                height: AppSize.buttonHeight,
+                decoration: BoxDecoration(
+                  color: buttonColor,
+                  borderRadius: BorderRadius.circular(AppSize.borderRadiusXs),
+                ),
+                child:Center(
+                  child:Text(buttonText,style: TextStyle(
+                    color: textColor
+                  )))
               ),
-              child:Center(
-                child:Text(buttonText,style: TextStyle(
-                  color: textColor
-                )))
-            );
+    );
   }
 }

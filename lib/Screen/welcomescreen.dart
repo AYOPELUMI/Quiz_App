@@ -1,10 +1,30 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quiz_app/Controllers/questionController.dart';
+import 'package:quiz_app/utils/Validators/validators.dart';
 import 'package:quiz_app/widgets/appPrimaryButton.dart';
 
+import '../routes/routes.dart';
 import '../utils/constants/sizes.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  _submit(BuildContext context){
+    FocusScope.of(context).unfocus();
+    if(!_formKey.currentState!.validate()) return;
+    Get.offAndToNamed(Routes.gameScreenRoute);
+    Get.find<QuestionController>().startTimer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +57,33 @@ class WelcomeScreen extends StatelessWidget {
               fontWeight: FontWeight.bold
             )),
             SizedBox(height: AppSize.spacingbtwItemSm),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder()
-              )
+            Form(
+              key: _formKey,
+              child: GetBuilder<QuestionController>(
+                init: Get.find<QuestionController>(),
+                builder: (controller) => TextFormField(
+                  controller : controller.nameController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppSize.borderRadiusSm),
+                      borderSide: BorderSide(width: 2.0),
+                    )
+                  ),
+                  validator: (String? val){
+                    AppValidators.validateEmptyString(val);
+                  },
+                  onSaved: (newValue){
+                    controller.name= newValue!.trim().toUpperCase();
+                  },
+                  onFieldSubmitted: (value) => _submit(context),
+                  ),
+                ),
             ),
             SizedBox(height: AppSize.spacingbtwSectionMd),
             AppPrimaryButton(
+              onTap:(){
+                _submit(context);
+              },
               buttonText: "Let's start >>>",
               buttonColor: Color.fromARGB(255,192,148,8),
               textColor: Colors.white

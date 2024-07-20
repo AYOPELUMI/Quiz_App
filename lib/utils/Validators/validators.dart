@@ -10,6 +10,14 @@ class AppValidators{
   return null;
   }
 
+  static String? validateEmptyString( String? value){
+
+    if(value == null || value.isEmpty){
+      return  'field is required';
+    }
+  return null;
+  }
+
   static String? validateEmail(String? value){
    if(value == null || value.isEmpty){
       return  'email is required';
