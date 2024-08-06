@@ -5,7 +5,7 @@ import 'package:quiz_app/Controllers/splashcontroller.dart';
 class MyBindings implements Bindings{
   @override
   void dependencies(){
-    Get.lazyPut(() => QuestionController());
+    Get.lazyPut(() => QuestionController(),fenix: true);
     Get.lazyPut(() => SplashController());
   }
 }

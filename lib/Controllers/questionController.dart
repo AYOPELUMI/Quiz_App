@@ -9,6 +9,14 @@ import '../routes/routes.dart';
 class QuestionController extends GetxController{
   var nameController = TextEditingController();
   String name="";
+  late PageController pageController;
+
+  @override
+  void onInit(){
+    pageController = PageController(initialPage: 0);
+    resetAnswer();
+    super.onInit();
+  }
   final List<QuestionModel> _questionList =[
     QuestionModel(
       id: 1, 
@@ -26,7 +34,7 @@ class QuestionController extends GetxController{
       question: "Which is not a programming language?",
        options: ["Java","Kotlin", "C","MongoDb"])
   ];
-  List<QuestionModel> get questionList => [...questionList];
+  List<QuestionModel> get questionList => [..._questionList];
   bool _isPressed = false;
   bool get isPressed => _isPressed;
 
@@ -52,7 +60,8 @@ class QuestionController extends GetxController{
   double get scoreResult {
     return (_numberOfCorrectAnswers * 100) / _questionList.length;
   }
-
+  int get countOfQuestion =>_questionList.length;
+  
   void  checkAnswer(QuestionModel questionModel, int selectedAnswer){
     _isPressed = true;
     _selectedAnswer = selectedAnswer;
@@ -84,7 +93,19 @@ class QuestionController extends GetxController{
   void resetTimer() => sec.value=maxSec;
 
   void nextQuestion (){
-
+    if(_timer != null || _timer!.isActive){
+      stopTimer();
+    }
+    if(pageController.page == _questionList.length -1){
+      Get.offAndToNamed(Routes.gameStatusRoute);
+    }
+    else{
+      _isPressed = false;
+      pageController.nextPage(duration: Duration(milliseconds:500), curve: Curves.linear);
+      startTimer();
+    }
+    _numberOfQuestions = pageController.page! + 2;
+    update();
   }
 
   void resetAnswer (){
@@ -100,5 +121,17 @@ class QuestionController extends GetxController{
     resetAnswer();
     _selectedAnswer = null;
     Get.offAllNamed(Routes.welcomeScreenRoute);
+  }
+
+  Color getColor (int answerIndex){
+    if(_isPressed){
+      if(answerIndex == _correctAnswer){
+        return Colors.green.shade600;
+      }
+      else if (answerIndex == selectedAnswer && _correctAnswer != _selectedAnswer){
+        return Colors.red.shade600;
+      }
+    }
+    return Colors.white;
   }
 }
